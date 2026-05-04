@@ -28,6 +28,11 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        // PRD design tokens
+        "bg-primary": "#0D0D1A",
+        "bg-secondary": "#1A1A2E",
+        "accent-red": "#E94560",
+        "accent-blue": "#0F3460",
         primary: {
           DEFAULT: "hsl(var(--primary-hsl))",
           foreground: "hsl(var(--primary-foreground))",

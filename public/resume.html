@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bathula Naga Sai Kiran — Resume</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 11pt;
+      color: #1a1a1a;
+      background: #fff;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 36px 44px;
+    }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 18px; border-bottom: 2px solid #1a1a1a; padding-bottom: 14px; }
+    .header h1 { font-size: 20pt; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+    .contact-line { font-size: 9.5pt; margin-top: 6px; color: #333; }
+    .contact-line a { color: #1a1a1a; text-decoration: none; }
+    .contact-line span { margin: 0 6px; color: #999; }
+
+    /* Section */
+    .section { margin-bottom: 16px; }
+    .section-title {
+      font-size: 10.5pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-bottom: 1.5px solid #1a1a1a;
+      padding-bottom: 3px;
+      margin-bottom: 10px;
+    }
+
+    /* Education */
+    .edu-row { display: flex; justify-content: space-between; align-items: baseline; }
+    .edu-row .left h3 { font-size: 11pt; font-weight: 700; }
+    .edu-row .left p { font-size: 10pt; color: #444; }
+    .edu-row .right { text-align: right; font-size: 10pt; font-weight: 600; white-space: nowrap; }
+
+    /* Skills table */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 24px; }
+    .skill-row { font-size: 10pt; }
+    .skill-row strong { font-weight: 600; }
+
+    /* Projects */
+    .project { margin-bottom: 14px; }
+    .project-header { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .project-header h3 { font-size: 11pt; font-weight: 700; }
+    .project-header .stack { font-size: 9.5pt; color: #555; }
+    .project-desc { font-size: 10pt; color: #333; margin: 3px 0 5px; }
+    .project ul { padding-left: 18px; }
+    .project ul li { font-size: 10pt; color: #333; margin-bottom: 3px; }
+
+    /* Soft skills */
+    .soft-skills { font-size: 10pt; color: #333; }
+
+    /* Print button — hidden when printing */
+    .print-btn {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      background: #E94560;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 4px 12px rgba(233,69,96,0.4);
+      z-index: 999;
+    }
+    .print-btn:hover { background: #c73652; }
+
+    @media print {
+      .print-btn { display: none; }
+      body { font-size: 10.5pt; }
+      .page { padding: 20px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">⬇ Download PDF</button>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Bathula Naga Sai Kiran</h1>
+    <div class="contact-line">
+      Mobile: <a href="tel:+919014794676">+91 9014794676</a>
+      <span>|</span>
+      Mail: <a href="mailto:bathulasaikiran2k2@gmail.com">bathulasaikiran2k2@gmail.com</a>
+      <br/>
+      LinkedIn: <a href="https://www.linkedin.com/in/bathula-naga-sai-kiran" target="_blank">linkedin.com/in/bathula-naga-sai-kiran</a>
+      <span>|</span>
+      GitHub: <a href="https://github.com/DEV-NSK" target="_blank">github.com/DEV-NSK</a>
+    </div>
+  </div>
+
+  <!-- Career Objective -->
+  <div class="section">
+    <div class="section-title">Career Objective</div>
+    <p style="font-size:10.5pt; color:#333;">
+      Full Stack Developer skilled in MERN stack and Python (Django), with experience building scalable
+      web applications and integrating AI-driven features using REST APIs. Seeking a Software Development
+      Engineer role to develop high-performance applications, enhance user experience, and solve real-world
+      problems using modern technologies.
+    </p>
+  </div>
+
+  <!-- Education -->
+  <div class="section">
+    <div class="section-title">Education</div>
+    <div class="edu-row">
+      <div class="left">
+        <h3>Bachelor of Technology in Computer Science</h3>
+        <p>St. Mary's Integrated Campus</p>
+      </div>
+      <div class="right">
+        CGPA: 7.6<br/>
+        <span style="font-weight:400; color:#555;">2023 – 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technical Skills -->
+  <div class="section">
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skill-row"><strong>Frontend Technologies:</strong> HTML, CSS, JavaScript</div>
+      <div class="skill-row"><strong>Databases:</strong> MongoDB, PostgreSQL</div>
+      <div class="skill-row"><strong>Backend Technologies:</strong> Node.js, Express.js, Django</div>
+      <div class="skill-row"><strong>Tools:</strong> Git, GitHub, Postman, Vercel, Render</div>
+      <div class="skill-row"><strong>Frameworks/Libraries:</strong> React.JS, Bootstrap, Tailwind CSS</div>
+      <div class="skill-row"><strong>Languages:</strong> Python</div>
+      <div class="skill-row"><strong>Concepts:</strong> REST APIs, API Testing, Deployment</div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="section">
+    <div class="section-title">Projects</div>
+
+    <div class="project">
+      <div class="project-header">
+        <h3>Job Portal &amp; Talent Platform</h3>
+        <span class="stack">| React.js, Django, PostgreSQL, Tailwind CSS, OpenAI API |</span>
+      </div>
+      <p class="project-desc">
+        Built a full-stack job portal platform integrating AI-driven career tools, coding practice, and
+        hiring automation. Users can explore jobs, practice interviews, and track progress. Designed to
+        support multiple user roles with secure access, responsive UI, and scalable architecture.
+      </p>
+      <ul>
+        <li>Built AI-driven career platform with 40+ pages and 80+ REST APIs, including resume match,
+            copilot, and mock interviews using OpenAI API and Django REST Framework.</li>
+        <li>Developed end-to-end recruitment system for 3 user roles (candidate, recruiter, admin) including
+            hiring pipeline, candidate ranking, and social feed using Django REST APIs and JWT authentication.</li>
+        <li>Implemented 5+ gamification features including XP, streak tracking, and reputation system using
+            PostgreSQL models, backend logic in Django, and real-time UI updates.</li>
+      </ul>
+    </div>
+
+    <div class="project">
+      <div class="project-header">
+        <h3>Travel Diary</h3>
+        <span class="stack">| MERN (MongoDB, Express.js, React.js, Node.js), Tailwind CSS, Cloudinary |</span>
+      </div>
+      <p class="project-desc">
+        Built a full-stack social travel platform where users can share travel stories, explore
+        destinations, and interact through likes and comments. Designed with secure authentication,
+        responsive UI, and scalable REST API architecture.
+      </p>
+      <ul>
+        <li>Social journaling features including post creation, likes, comments, and public feed implemented
+            using React components, MongoDB schemas, and Express REST APIs supporting 10+ core features.</li>
+        <li>Authentication and user system including login/register, profile management, image uploads, and
+            role-based access implemented using JWT, bcrypt, Multer, and Cloudinary.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Soft Skills -->
+  <div class="section">
+    <div class="section-title">Soft Skills</div>
+    <p class="soft-skills">
+      Communication &nbsp;|&nbsp; Active listening &nbsp;|&nbsp; Public speaking &nbsp;|&nbsp;
+      Creative &nbsp;|&nbsp; Flexibility &nbsp;|&nbsp; Problem-solving &nbsp;|&nbsp;
+      Patience &nbsp;|&nbsp; Adaptability
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

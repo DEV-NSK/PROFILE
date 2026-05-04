@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiMenuAlt3, HiX, HiDownload, HiSun, HiMoon } from "react-icons/hi";
+import { HiMenuAlt3, HiX, HiDownload, HiSun, HiMoon, HiVolumeUp, HiVolumeOff } from "react-icons/hi";
 
 const links = [
   { label: "About", href: "#about" },
@@ -16,7 +16,9 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("");
   const [theme, setTheme] = useState<"dark" | "light">("dark");
   const [logoHovered, setLogoHovered] = useState(false);
+  const [soundOn, setSoundOn] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
 
   // Scroll handler
   useEffect(() => {
@@ -60,6 +62,55 @@ const Navbar = () => {
     document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("theme", next);
   };
+
+  // Ambient sound toggle using Web Audio API (subtle electronic hum)
+  const toggleSound = () => {
+    if (soundOn) {
+      // Stop audio
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close();
+        audioCtxRef.current = null;
+      }
+      setSoundOn(false);
+    } else {
+      try {
+        const ctx = new AudioContext();
+        audioCtxRef.current = ctx;
+
+        // Create a subtle ambient drone
+        const createOscillator = (freq: number, gain: number, type: OscillatorType = "sine") => {
+          const osc = ctx.createOscillator();
+          const gainNode = ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gainNode.gain.setValueAtTime(0, ctx.currentTime);
+          gainNode.gain.linearRampToValueAtTime(gain, ctx.currentTime + 2);
+          osc.connect(gainNode);
+          gainNode.connect(ctx.destination);
+          osc.start();
+          return { osc, gainNode };
+        };
+
+        // Subtle ambient layers
+        createOscillator(55, 0.02, "sine");   // deep bass
+        createOscillator(110, 0.015, "sine"); // mid
+        createOscillator(220, 0.008, "triangle"); // high
+
+        setSoundOn(true);
+      } catch {
+        // Web Audio not supported
+      }
+    }
+  };
+
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close();
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -113,6 +164,28 @@ const Navbar = () => {
 
           {/* Right actions */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Sound toggle — muted by default */}
+            <button
+              onClick={toggleSound}
+              className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+              style={{
+                background: soundOn ? "rgba(233,69,96,0.1)" : "var(--surface)",
+                border: `1px solid ${soundOn ? "rgba(233,69,96,0.4)" : "var(--border)"}`,
+                color: soundOn ? "#E94560" : "var(--text-muted)",
+              }}
+              aria-label={soundOn ? "Mute ambient sound" : "Enable ambient sound"}
+              title={soundOn ? "Mute ambient sound" : "Enable ambient sound (subtle electronic hum)"}
+            >
+              <motion.div
+                key={soundOn ? "on" : "off"}
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {soundOn ? <HiVolumeUp size={16} /> : <HiVolumeOff size={16} />}
+              </motion.div>
+            </button>
+
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
@@ -136,10 +209,11 @@ const Navbar = () => {
 
             {/* Resume */}
             <a
-              href="/resume.pdf"
-              download
+              href="/resume.html"
+              target="_blank"
+              rel="noopener noreferrer"
               className="outline-btn text-sm py-2 px-4"
-              aria-label="Download Resume"
+              aria-label="View and Download Resume"
             >
               <HiDownload size={14} />
               Resume
@@ -197,8 +271,9 @@ const Navbar = () => {
               </motion.a>
             ))}
             <motion.a
-              href="/resume.pdf"
-              download
+              href="/resume.html"
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: links.length * 0.07 }}
