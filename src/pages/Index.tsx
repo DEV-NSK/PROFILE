@@ -1,34 +1,37 @@
-import AntigravityScene from "@/components/AntigravityScene";
-import Navbar from "@/components/Navbar";
+import CustomCursor from "@/components/CustomCursor";
+import ParticleBackground from "@/components/ParticleBackground";
 import ScrollProgress from "@/components/ScrollProgress";
+import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import TimelineSection from "@/components/TimelineSection";
 import SkillsSection from "@/components/SkillsSection";
-import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import StartupSection from "@/components/StartupSection";
-import ProcessSection from "@/components/ProcessSection";
-import EducationSection from "@/components/EducationSection";
+import TimelineSection from "@/components/TimelineSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
-      <AntigravityScene />
+    <div
+      className="relative min-h-screen overflow-x-hidden"
+      style={{ background: "var(--bg)", color: "var(--text)" }}
+    >
+      {/* Global UI */}
+      <CustomCursor />
+      <ParticleBackground />
       <ScrollProgress />
       <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <TimelineSection />
-      <SkillsSection />
-      <ServicesSection />
-      <ProjectsSection />
-      <StartupSection />
-      <ProcessSection />
-      <EducationSection />
-      <ContactSection />
+
+      {/* Sections */}
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <TimelineSection />
+        <ContactSection />
+      </main>
+
       <Footer />
     </div>
   );

@@ -1,13 +1,24 @@
-import { motion, useScroll } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const ScrollProgress = () => {
-  const { scrollYProgress } = useScroll();
-  return (
-    <motion.div
-      style={{ scaleX: scrollYProgress }}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-primary origin-left z-[60]"
-    />
-  );
+  const barRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
+
+    const update = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = `${pct}%`;
+    };
+
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  return <div id="scroll-progress" ref={barRef} aria-hidden="true" />;
 };
 
 export default ScrollProgress;

@@ -1,89 +1,219 @@
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import SectionWrapper from "./SectionWrapper";
-import { SiHtml5, SiJavascript, SiReact, SiNodedotjs, SiExpress, SiGithub, SiVercel, SiFirebase } from "react-icons/si";
-import { FaCss3Alt } from "react-icons/fa";
-import { HiCog, HiChip, HiChat, HiLink } from "react-icons/hi";
 
 const categories = [
   {
+    icon: "</>",
     title: "Frontend",
     skills: [
-      { name: "HTML", icon: SiHtml5, level: 90 },
-      { name: "CSS", icon: FaCss3Alt, level: 85 },
-      { name: "JavaScript", icon: SiJavascript, level: 85 },
-      { name: "React", icon: SiReact, level: 80 },
+      { name: "HTML5", level: "advanced" },
+      { name: "CSS3", level: "advanced" },
+      { name: "JavaScript (ES6+)", level: "intermediate" },
+      { name: "React.js", level: "intermediate" },
+      { name: "Tailwind CSS", level: "intermediate" },
+      { name: "Responsive Design", level: "advanced" },
     ],
   },
   {
+    icon: "⚙️",
     title: "Backend",
     skills: [
-      { name: "Node.js", icon: SiNodedotjs, level: 75 },
-      { name: "Express.js", icon: SiExpress, level: 70 },
-      { name: "API Dev", icon: HiLink, level: 80 },
+      { name: "Django", level: "intermediate" },
+      { name: "Python", level: "intermediate" },
+      { name: "Node.js", level: "intermediate" },
+      { name: "Express.js", level: "intermediate" },
+      { name: "REST APIs", level: "intermediate" },
+      { name: "Django ORM", level: "intermediate" },
     ],
   },
   {
-    title: "AI & Automation",
+    icon: "🛠",
+    title: "Tools & Dev",
     skills: [
-      { name: "AI Integrations", icon: HiChip, level: 75 },
-      { name: "Chatbot Systems", icon: HiChat, level: 70 },
-      { name: "Automation", icon: HiCog, level: 80 },
+      { name: "Git", level: "advanced" },
+      { name: "GitHub", level: "advanced" },
+      { name: "VS Code", level: "advanced" },
+      { name: "Vercel", level: "advanced" },
+      { name: "Postman", level: "intermediate" },
+      { name: "npm", level: "advanced" },
     ],
   },
   {
-    title: "Tools",
+    icon: "📚",
+    title: "CS Fundamentals",
     skills: [
-      { name: "GitHub", icon: SiGithub, level: 85 },
-      { name: "Vercel", icon: SiVercel, level: 85 },
-      { name: "Firebase", icon: SiFirebase, level: 75 },
+      { name: "Data Structures", level: "intermediate" },
+      { name: "Algorithms", level: "intermediate" },
+      { name: "OOP", level: "intermediate" },
+      { name: "DBMS", level: "beginner" },
+      { name: "PostgreSQL", level: "intermediate" },
+      { name: "MongoDB", level: "intermediate" },
+    ],
+  },
+  {
+    icon: "🚀",
+    title: "Currently Learning",
+    skills: [
+      { name: "Async JS", level: "learning" },
+      { name: "Higher-Order Functions", level: "learning" },
+      { name: "Python DSA", level: "learning" },
+      { name: "System Design", level: "learning" },
+      { name: "OpenAI API", level: "learning" },
     ],
   },
 ];
 
-const SkillsSection = () => (
-  <SectionWrapper id="skills">
-    <h2 className="font-display text-3xl md:text-4xl font-bold text-center mb-2">
-      Technical <span className="gradient-text">Skills</span>
-    </h2>
-    <div className="w-16 h-1 bg-primary rounded-full mx-auto mb-16" />
+const levelColors: Record<string, string> = {
+  advanced: "rgba(232,101,10,0.9)",
+  intermediate: "rgba(232,101,10,0.65)",
+  beginner: "rgba(232,101,10,0.4)",
+  learning: "rgba(100,180,255,0.8)",
+};
 
-    <div className="grid md:grid-cols-2 gap-8">
-      {categories.map((cat, ci) => (
-        <motion.div
-          key={cat.title}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: ci * 0.1 }}
-          className="glass rounded-2xl p-6 hover:glow-border transition-all duration-300"
+const levelBg: Record<string, string> = {
+  advanced: "rgba(232,101,10,0.15)",
+  intermediate: "rgba(232,101,10,0.1)",
+  beginner: "rgba(232,101,10,0.06)",
+  learning: "rgba(100,180,255,0.1)",
+};
+
+const SkillCard = ({
+  cat,
+  index,
+}: {
+  cat: (typeof categories)[0];
+  index: number;
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // 3D tilt effect
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    const handleMove = (e: MouseEvent) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const rotX = ((y - cy) / cy) * -6;
+      const rotY = ((x - cx) / cx) * 6;
+      card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+    };
+
+    const handleLeave = () => {
+      card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
+    };
+
+    card.addEventListener("mousemove", handleMove);
+    card.addEventListener("mouseleave", handleLeave);
+    return () => {
+      card.removeEventListener("mousemove", handleMove);
+      card.removeEventListener("mouseleave", handleLeave);
+    };
+  }, []);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="tilt-card rounded-2xl p-6 transition-all duration-300"
+      style={{
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.borderColor = "var(--primary)";
+        (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px var(--glow-light)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+        (e.currentTarget as HTMLElement).style.boxShadow = "none";
+      }}
+    >
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-5">
+        <span className="text-2xl" aria-hidden="true">
+          {cat.icon}
+        </span>
+        <h3
+          className="font-heading font-bold text-lg"
+          style={{ color: "var(--text)" }}
         >
-          <h3 className="font-display text-lg font-semibold text-primary mb-6">{cat.title}</h3>
-          <div className="space-y-5">
-            {cat.skills.map((skill) => (
-              <div key={skill.name} className="group">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2 text-sm">
-                    <skill.icon className="text-muted-foreground group-hover:text-primary transition-colors" />
-                    <span className="text-foreground">{skill.name}</span>
-                  </div>
-                  <span className="text-xs text-muted-foreground">{skill.level}%</span>
-                </div>
-                <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.2 }}
-                    className="h-full rounded-full bg-gradient-to-r from-primary to-accent"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </SectionWrapper>
+          {cat.title}
+        </h3>
+      </div>
+
+      {/* Skill tags */}
+      <div className="flex flex-wrap gap-2">
+        {cat.skills.map((skill, i) => (
+          <motion.span
+            key={skill.name}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 + i * 0.05 }}
+            className="skill-tag"
+            style={{
+              color: levelColors[skill.level],
+              background: levelBg[skill.level],
+              borderColor: levelColors[skill.level] + "40",
+            }}
+          >
+            {skill.name}
+            {skill.level === "learning" && (
+              <span
+                className="ml-1 text-xs"
+                style={{ color: "rgba(100,180,255,0.8)" }}
+              >
+                ✦
+              </span>
+            )}
+          </motion.span>
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+const SkillsSection = () => (
+  <section id="skills" className="section-padding max-w-7xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7 }}
+    >
+      <div className="text-center mb-16">
+        <span className="section-tag">// what I know</span>
+        <h2
+          className="font-display font-bold text-3xl md:text-5xl"
+          style={{ color: "var(--text)" }}
+        >
+          Skills &{" "}
+          <span className="gradient-text">Stack</span>
+        </h2>
+        <p className="mt-3 text-sm font-mono" style={{ color: "var(--text-muted)" }}>
+          <span style={{ color: "rgba(232,101,10,0.9)" }}>■</span> Advanced &nbsp;
+          <span style={{ color: "rgba(232,101,10,0.65)" }}>■</span> Intermediate &nbsp;
+          <span style={{ color: "rgba(232,101,10,0.4)" }}>■</span> Beginner &nbsp;
+          <span style={{ color: "rgba(100,180,255,0.8)" }}>✦</span> Learning
+        </p>
+      </div>
+
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {categories.map((cat, i) => (
+          <SkillCard key={cat.title} cat={cat} index={i} />
+        ))}
+      </div>
+    </motion.div>
+  </section>
 );
 
 export default SkillsSection;
